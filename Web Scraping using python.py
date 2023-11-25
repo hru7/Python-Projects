@@ -1,0 +1,98 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[3]:
+
+
+from bs4 import BeautifulSoup
+import requests
+import smtplib
+import time
+import datetime
+
+
+# In[6]:
+
+
+# connect to the website
+url = "https://www.amazon.in/AYBEEZ-India-Jersey-World-Medium/dp/B0CB6D6J64/ref=sr_1_7?crid=TJMFOWDP731H&keywords=team+india+new+jersey+adidas+2023&nsdOptOutParam=true&qid=1698908150&sprefix=team+%2Caps%2C421&sr=8-7"
+headers= {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"}
+
+page =requests.get(url,headers = headers)
+
+soup1 = BeautifulSoup(page.content,'html.parser')
+
+soup2 = BeautifulSoup(soup1.prettify(),'html.parser')
+
+title = soup2.find(id ='productTitle').get_text()
+#symbol = soup.find('span', class_='a-price-symbol').get_text()
+price = soup.find('span', class_="a-price-whole").get_text()
+
+#if symbol and price:
+#    price = symbol + price
+print('title:',title)    
+print("Price:",price)
+
+
+
+
+
+
+
+
+# In[53]:
+
+
+import csv
+
+header = ['Title','Price','Date']
+data = [title,price,today]
+
+with open("Amazonwebscrapdata.csv",'w',newline='',encoding ='UTF8') as f:
+    writer = csv.writer(f)
+    writer.writerow(header)
+    writer.writerow(data)
+    
+
+
+# In[54]:
+
+
+import shutil
+
+source_file = 'Amazonwebscrapdata.csv'  # Replace with your CSV file name
+destination_directory = 'F:/Skills/1.Python/Alex the analyst/pandas'  # Replace with the desired destination directory
+shutil.copy(source_file,destination_directory)
+
+
+
+# In[55]:
+
+
+import pandas as pd
+df =pd.read_csv(r"F:\Skills\1.Python\Alex the analyst\pandas\Amazonwebscrapdata.csv")
+
+print(df)
+
+
+# In[ ]:
+
+
+with open("Amazonwebscrapdata.csv",'a+',newline='',encoding ='UTF8') as f:
+    writer = csv.writer(f)
+    writer.writerow(data)
+    
+    
+
+
+# In[61]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
